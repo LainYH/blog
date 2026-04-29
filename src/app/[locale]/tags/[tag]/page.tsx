@@ -18,7 +18,8 @@ export default async function TagDetailPage({
 }: {
   params: Promise<{ locale: string; tag: string }>;
 }) {
-  const { locale, tag } = await params;
+  const { locale, tag: rawTag } = await params;
+  const tag = decodeURIComponent(rawTag);
   setRequestLocale(locale);
   const t = await getTranslations('tags');
 

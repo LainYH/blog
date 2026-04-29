@@ -20,7 +20,8 @@ export default async function PostPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale, slug } = await params;
+  const { locale, slug: rawSlug } = await params;
+  const slug = decodeURIComponent(rawSlug);
   setRequestLocale(locale);
   const t = await getTranslations('post');
 
