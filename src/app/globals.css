@@ -8,7 +8,7 @@ body {
   background-image: url('/images/bg-light.svg');
 }
 
-body.dark {
+.dark body {
   background-image: url('/images/bg.svg');
 }
 
