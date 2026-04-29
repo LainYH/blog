@@ -26,8 +26,8 @@ const index = files.map(({ filePath, relativePath }) => {
   const raw = fs.readFileSync(filePath, 'utf-8');
   const { data, content } = matter(raw);
   const parts = relativePath.replace(/\.(md|mdx)$/, '').split('/');
-  const slug = parts.pop();
-  const categoryPath = parts;
+  const slug = parts.join('-');
+  const categoryPath = parts.slice(0, -1);
 
   return {
     slug,

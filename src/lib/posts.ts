@@ -27,10 +27,10 @@ function parsePost(filePath: string, relativePath: string): Post {
   const { data, content } = matter(raw);
   const stats = readingTime(content);
 
-  // e.g. "frontend/react/hooks.md" -> categoryPath ["frontend", "react"], slug "hooks"
+  // e.g. "frontend/react/hooks.md" -> slug "frontend-react-hooks", categoryPath ["frontend", "react"]
   const parts = relativePath.replace(/\.(md|mdx)$/, '').split('/');
-  const slug = parts.pop()!;
-  const categoryPath = parts;
+  const slug = parts.join('-');
+  const categoryPath = parts.slice(0, -1);
 
   return {
     title: data.title || slug,
