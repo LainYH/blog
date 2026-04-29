@@ -3,6 +3,15 @@
 /* Force dark mode to only use .dark class (not prefers-color-scheme media query) */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Background image - switches with dark mode */
+body {
+  background-image: url('/images/bg-light.svg');
+}
+
+body.dark {
+  background-image: url('/images/bg.svg');
+}
+
 /* Shiki theme variables */
 :root {
   --shiki-light-bg: #ffffff;
