@@ -29,7 +29,11 @@ function deploy() {
 
   try {
     console.log('\n[Deploying] Building and pushing...');
-    execSync('out')
+    try { execSync('out') } catch {
+      process.env.https_proxy = 'http://127.0.0.1:7890';
+      process.env.http_proxy = 'http://127.0.0.1:7890';
+      process.env.all_proxy = 'socks5://127.0.0.1:789';
+    }
     execSync('node scripts/build-search-index.mjs', { stdio: 'inherit', cwd: process.cwd() });
     execSync('git add -A', { stdio: 'inherit', cwd: process.cwd() });
 
