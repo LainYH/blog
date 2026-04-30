@@ -6,6 +6,7 @@ summary: "Harness Engineering简述。"
 ---
 # Harness Engineering 发展背景
 ## 提示词工程
+让AI**听懂**需求
 
 ## 上下文工程
 ##  Harness Engineering
