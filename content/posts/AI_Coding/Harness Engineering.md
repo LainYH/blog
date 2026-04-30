@@ -6,7 +6,7 @@ summary: "Harness Engineering简述。"
 ---
 # Harness Engineering 发展背景
 ## 提示词工程
-让AI**听懂**需求
+核心：让AI**听懂**需求
 - 为AI设定角色
 - 设置输入输出格式
 - 思维链+样例
