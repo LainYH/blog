@@ -36,6 +36,12 @@ for (const { filePath, relativePath } of files) {
     continue;
   }
 
+  // Skip files without frontmatter (drafts from Obsidian)
+  if (!data.title && !data.date && !data.summary) {
+    console.log(`⏭️  ${relativePath}: Skipped (no frontmatter, treated as draft)`);
+    continue;
+  }
+
   // Validate title
   if (!data.title || typeof data.title !== 'string') {
     console.error(`❌ ${relativePath}: Missing or invalid "title" field`);
