@@ -11,5 +11,5 @@ summary: "Harness Engineering简述。"
 - 设置输入输出格式
 - 思维链+样例
 ## 上下文工程
-
+本阶段核心任务：
 ##  Harness Engineering
