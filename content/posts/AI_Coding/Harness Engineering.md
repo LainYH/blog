@@ -9,6 +9,7 @@ summary: "Harness Engineering简述。"
 让AI**听懂**需求
 - 为AI设定角色
 - 设置输入输出格式
+- 思维链+样例
 - 
 ## 上下文工程
 ##  Harness Engineering
