@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
+import { safeParseFrontmatter } from './lib/frontmatter.mjs';
 
 const POSTS_DIR = path.join(process.cwd(), 'content/posts');
 const OUTPUT = path.join(process.cwd(), 'public/search-index.json');
@@ -24,7 +24,7 @@ function getAllMdFiles(dir, base = '') {
 const files = getAllMdFiles(POSTS_DIR);
 const index = files.map(({ filePath, relativePath }) => {
   const raw = fs.readFileSync(filePath, 'utf-8');
-  const { data, content } = matter(raw);
+  const { data, content } = safeParseFrontmatter(raw);
   const parts = relativePath.replace(/\.(md|mdx)$/, '').split('/');
   const slug = parts.join('-');
   const categoryPath = parts.slice(0, -1);
@@ -33,7 +33,7 @@ const index = files.map(({ filePath, relativePath }) => {
     slug,
     title: data.title || slug,
     summary: data.summary || '',
-    content: content.slice(0, 2000), // Truncate for index size
+    content: content.slice(0, 2000),
     categoryPath,
     tags: data.tags || [],
     date: data.date || '2026-01-01',

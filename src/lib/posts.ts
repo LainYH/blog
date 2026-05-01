@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
 import readingTime from 'reading-time';
+import { safeParseFrontmatter } from './frontmatter';
 import type { Post, PostMeta, CategoryNode } from './types';
 
 const POSTS_DIR = path.join(process.cwd(), 'content/posts');
@@ -24,7 +24,7 @@ function getAllMdFiles(dir: string, base: string = ''): { filePath: string; rela
 
 function parsePost(filePath: string, relativePath: string): Post {
   const raw = fs.readFileSync(filePath, 'utf-8');
-  const { data, content } = matter(raw);
+  const { data, content } = safeParseFrontmatter(raw);
   const stats = readingTime(content);
 
   // e.g. "frontend/react/hooks.md" -> slug "frontend-react-hooks", categoryPath ["frontend", "react"]
