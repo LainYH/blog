@@ -15,7 +15,7 @@ export function GiscusComments() {
 
     const script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
-    script.setAttribute('data-repo', 'Lainnevergiveup/Lainnevergiveup.github.io');
+    script.setAttribute('data-repo', 'Lainnevergiveup/lain-blog');
     script.setAttribute('data-repo-id', 'R_kgDOSBQOkw');
     script.setAttribute('data-category', 'General');
     script.setAttribute('data-category-id', 'DIC_kwDOSBQOk84C63vo');

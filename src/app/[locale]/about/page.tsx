@@ -13,7 +13,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       {/* Avatar & Name */}
       <div className="text-center mb-10">
         <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4">
-          <img src="/images/avatar.svg" alt="Lain" className="w-full h-full object-cover" />
+          <img src="/blog/images/avatar.svg" alt="Lain" className="w-full h-full object-cover" />
         </div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Lain</h1>
         <p className="text-gray-500 dark:text-gray-400">Developer · Tech Enthusiast</p>

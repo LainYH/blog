@@ -18,7 +18,7 @@ export function SearchBar() {
 
   useEffect(() => {
     // Load search index at runtime
-    fetch('/search-index.json')
+    fetch('/blog/search-index.json')
       .then((r) => r.json())
       .then(setData)
       .catch(() => {});

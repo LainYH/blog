@@ -39,6 +39,15 @@ jobs:
       - name: Build Next.js
         run: npm run build
 
+      - name: Move build output to /blog subdirectory
+        run: |
+          mkdir -p out/blog
+          cd out
+          for f in *; do
+            [ "$f" = "blog" ] && continue
+            mv "$f" blog/
+          done
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

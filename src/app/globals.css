@@ -5,11 +5,11 @@
 
 /* Background image - switches with dark mode */
 body {
-  background-image: url('/images/bg-light.svg');
+  background-image: url('/blog/images/bg-light.svg');
 }
 
 .dark body {
-  background-image: url('/images/bg.svg');
+  background-image: url('/blog/images/bg.svg');
 }
 
 /* Shiki theme variables */

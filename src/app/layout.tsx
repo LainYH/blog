@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "Lain's Blog",
   description: 'Here\'s some strange things.',
   icons: {
-    icon: '/favicon.svg',
+    icon: '/blog/favicon.svg',
   },
 };
 
