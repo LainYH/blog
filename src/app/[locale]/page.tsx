@@ -1,7 +1,7 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { getPostMetaList, buildCategoryTree, getAllTags } from '@/lib/posts';
+import { Pagination } from '@/components/Pagination';
 import { BlogStats } from '@/components/BlogStats';
-import { HomePostList } from '@/components/HomePostList';
 import Link from 'next/link';
 
 export function generateStaticParams() {
@@ -12,25 +12,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   setRequestLocale(locale);
   const posts = getPostMetaList();
+  const t = await getTranslations('home');
+  const tCat = await getTranslations('categories');
   const tTags = await getTranslations('tags');
-  const tHome = await getTranslations('home');
 
   const tree = buildCategoryTree(posts);
-  const topCategories = Array.from(tree.children.values()).map((cat) => {
-    const count = Array.from(cat.children.values()).reduce(
-      (sum, child) => sum + child.posts.length,
-      cat.posts.length
-    );
-    return { name: cat.name, count };
-  });
-
   const tagMap = getAllTags(posts);
   const sortedTags = Array.from(tagMap.entries()).sort((a, b) => b[1].length - a[1].length);
+  const topCategories = Array.from(tree.children.values());
 
   return (
-    <div className="h-[calc(100vh-8rem)] flex flex-col">
-      {/* Title - fixed */}
-      <div className="mb-6 shrink-0">
+    <div>
+      <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 font-mono">
           {'>'} Lain&apos;s Blog
         </h1>
@@ -39,22 +32,20 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </p>
       </div>
 
-      {/* Grid - fills remaining space */}
-      <div className="flex-1 min-h-0 grid lg:grid-cols-[1fr_280px] gap-8 items-start">
-        {/* Left: scrollable post list */}
-        <div className="min-h-0 overflow-y-auto pb-8">
-          <HomePostList
-            posts={posts}
-            categories={topCategories}
-            allLabel={tHome('allCategories')}
-          />
-          <footer className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800 text-center text-xs text-gray-500 dark:text-gray-400">
-            &copy; {new Date().getFullYear()} Lain · Built with Next.js &amp; TypeScript
-          </footer>
+      <div className="grid lg:grid-cols-[1fr_280px] gap-8 items-start">
+        {/* Main content */}
+        <div>
+          <section>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+              <span className="text-blue-500">#</span>
+              {t('latestPosts')}
+            </h2>
+            <Pagination posts={posts} />
+          </section>
         </div>
 
-        {/* Right: fixed sidebar (lg only) */}
-        <aside className="hidden lg:flex lg:flex-col gap-6 shrink-0">
+        {/* Sidebar */}
+        <aside className="space-y-6 lg:sticky lg:top-6">
           {/* Stats */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
@@ -64,13 +55,45 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <BlogStats posts={posts} />
           </div>
 
+          {/* Categories */}
+          <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+              <span className="text-blue-500">#</span>
+              {tCat('title')}
+            </h3>
+            <div className="space-y-1">
+              {topCategories.map((cat) => {
+                const count = Array.from(cat.children.values()).reduce(
+                  (sum, child) => sum + child.posts.length,
+                  cat.posts.length
+                );
+                return (
+                  <Link
+                    key={cat.slug}
+                    href={`/${locale}/categories/${encodeURIComponent(cat.slug)}`}
+                    className="flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-sm"
+                  >
+                    <span className="text-gray-700 dark:text-gray-300">{cat.name}</span>
+                    <span className="text-xs text-gray-400 dark:text-gray-500">{count}</span>
+                  </Link>
+                );
+              })}
+            </div>
+            <Link
+              href={`/${locale}/categories`}
+              className="mt-3 inline-block text-xs text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              {tCat('allCategories')} →
+            </Link>
+          </div>
+
           {/* Tags */}
-          <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-4 flex-1 min-h-0 flex flex-col">
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2 shrink-0">
+          <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
               <span className="text-blue-500">#</span>
               {tTags('title')}
             </h3>
-            <div className="flex flex-wrap gap-1.5 overflow-y-auto flex-1 min-h-0">
+            <div className="flex flex-wrap gap-1.5 max-h-[calc(100vh-20rem)] overflow-y-auto">
               {sortedTags.map(([tag, tagPosts]) => (
                 <Link
                   key={tag}
@@ -84,7 +107,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
             <Link
               href={`/${locale}/tags`}
-              className="mt-3 inline-block text-xs text-blue-600 dark:text-blue-400 hover:underline shrink-0"
+              className="mt-3 inline-block text-xs text-blue-600 dark:text-blue-400 hover:underline"
             >
               {tTags('allTags')} →
             </Link>
