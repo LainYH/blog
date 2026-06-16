@@ -32,7 +32,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_280px] gap-8">
+      <div className="grid lg:grid-cols-[1fr_280px] gap-8 items-start">
         {/* Main content */}
         <div>
           <section>
@@ -45,7 +45,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
 
         {/* Sidebar */}
-        <aside className="space-y-6">
+        <aside className="space-y-6 lg:sticky lg:top-6">
           {/* Stats */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
@@ -93,7 +93,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <span className="text-blue-500">#</span>
               {tTags('title')}
             </h3>
-            <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto">
+            <div className="flex flex-wrap gap-1.5 max-h-[calc(100vh-20rem)] overflow-y-auto">
               {sortedTags.map(([tag, tagPosts]) => (
                 <Link
                   key={tag}
