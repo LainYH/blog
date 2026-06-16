@@ -39,7 +39,7 @@ function parsePost(filePath: string, relativePath: string): Post {
     summary: data.summary || '',
     slug,
     categoryPath,
-    readingTime: stats.text,
+    readingTime: `约${Math.ceil(stats.minutes)}分钟`,
     content,
   };
 }
