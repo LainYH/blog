@@ -1,6 +1,8 @@
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import remarkRehype from 'remark-rehype';
+import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
 import { codeToHtml } from 'shiki';
@@ -9,7 +11,9 @@ export async function renderMarkdown(markdown: string): Promise<string> {
   // Process: remark → remark-rehype (with rehype-slug for heading IDs) → stringify
   const result = await remark()
     .use(remarkGfm)
+    .use(remarkMath)
     .use(remarkRehype)
+    .use(rehypeKatex)
     .use(rehypeSlug)
     .use(rehypeStringify)
     .process(markdown);
@@ -73,5 +77,7 @@ function decodeHtmlEntities(str: string): string {
     .replace(/&gt;/g, '>')
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'");
+    .replace(/&#39;/g, "'")
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(parseInt(dec, 10)));
 }

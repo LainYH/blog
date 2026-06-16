@@ -35,10 +35,14 @@ body {
   line-height: 1.5;
   border-radius: 0.5rem;
   border: 1px solid #e5e7eb;
+  background-color: var(--shiki-light-bg) !important;
+  color: var(--shiki-light-fg) !important;
 }
 
 .dark .code-block-wrapper pre {
   border-color: #374151;
+  background-color: var(--shiki-dark-bg) !important;
+  color: var(--shiki-dark-fg) !important;
 }
 
 .copy-btn {
