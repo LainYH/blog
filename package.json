@@ -13,6 +13,7 @@
     "sync": "bash scripts/sync-from-obsidian.sh"
   },
   "dependencies": {
+    "@swc/helpers": "^0.5.23",
     "flexsearch": "^0.8.212",
     "framer-motion": "^12.38.0",
     "github-slugger": "^2.0.0",
