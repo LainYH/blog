@@ -11,7 +11,7 @@ export default async function GitHubPage({ params }: { params: Promise<{ locale:
 
   return (
     <div>
-      <GitHubRepos username="Lainnevergiveup" />
+      <GitHubRepos username="LainYH" />
     </div>
   );
 }

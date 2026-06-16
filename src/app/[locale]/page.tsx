@@ -93,7 +93,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <span className="text-blue-500">#</span>
               {tTags('title')}
             </h3>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto">
               {sortedTags.map(([tag, tagPosts]) => (
                 <Link
                   key={tag}
